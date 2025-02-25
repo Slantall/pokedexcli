@@ -56,8 +56,13 @@ func startRepl() {
 		},
 		"explore": {
 			Name:        "explore",
-			Description: "Requires a name of a location to be input. Display a list available pokemon in a given area.",
+			Description: "Requires a name of a location to be input. Display a list available Pokemon in a given area.",
 			Callback:    commandExplore,
+		},
+		"catch": {
+			Name:        "catch",
+			Description: "Allows you to attempt to catch a Pokemon to add to your Pokedex.",
+			Callback:    commandCatch,
 		},
 	}
 

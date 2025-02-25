@@ -9,7 +9,7 @@ import (
 func getAndCache(url string) (data []byte, err error) {
 	data, found := cache.Get(url)
 	if !found {
-		fmt.Println("Cache miss - making HTTP request...")
+		//fmt.Println("Cache miss - making HTTP request...")
 		res, err := http.Get(url)
 		if err != nil {
 			return nil, fmt.Errorf("error making request: %w", err)
@@ -25,7 +25,7 @@ func getAndCache(url string) (data []byte, err error) {
 		}
 		cache.Add(url, data)
 	} else {
-		fmt.Println("Cache hit!")
+		//fmt.Println("Cache hit!")
 	}
 	return data, nil
 }
