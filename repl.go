@@ -19,7 +19,7 @@ var config Config
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(config *Config) error
+	Callback    func(config *Config, parameter string) error
 }
 
 var commands map[string]CliCommand
@@ -46,25 +46,35 @@ func startRepl() {
 		},
 		"map": {
 			Name:        "map",
-			Description: "display a list the next 20 locations. Will start with the first 20 locations when first ran.",
+			Description: "Display a list the next 20 locations. Will start with the first 20 locations when first ran.",
 			Callback:    commandMap,
 		},
 		"mapb": {
 			Name:        "mapb",
-			Description: "display a list the last 20 locations. Will start with the first 20 locations when first ran.",
+			Description: "Display a list the last 20 locations. Will show nothing if map hasn't ben ran yet.",
 			Callback:    commandMapb,
+		},
+		"explore": {
+			Name:        "explore",
+			Description: "Requires a name of a location to be input. Display a list available pokemon in a given area.",
+			Callback:    commandExplore,
 		},
 	}
 
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
-		firstWord := cleanInput(scanner.Text())[0]
+		userInput := cleanInput(scanner.Text())
+		firstWord := userInput[0]
+		secondWord := ""
+		if len(userInput) > 1 {
+			secondWord = userInput[1]
+		}
 		command, ok := commands[firstWord]
 		if !ok {
 			fmt.Println("Unknown command")
 		} else {
-			command.Callback(&config)
+			command.Callback(&config, secondWord)
 		}
 
 	}

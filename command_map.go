@@ -3,8 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
 )
 
 type MapPages struct {
@@ -17,32 +15,16 @@ type MapPages struct {
 	} `json:"results"`
 }
 
-func commandMap(config *Config) error {
+func commandMap(config *Config, p string) error {
 	if config.Next == "" {
 		config.Next = "https://pokeapi.co/api/v2/location-area/"
 	}
-	data, found := cache.Get(config.Next)
-	if !found {
-		fmt.Println("Cache miss - making HTTP request...")
-		res, err := http.Get(config.Next)
-		if err != nil {
-			return fmt.Errorf("error making request: %w", err)
-		}
-		defer res.Body.Close()
-
-		data, err = io.ReadAll(res.Body)
-		if res.StatusCode > 299 {
-			fmt.Printf("Response failed with status code: %d and\nbody: %s\n", res.StatusCode, data)
-		}
-		if err != nil {
-			return fmt.Errorf("error reading response: %w", err)
-		}
-		cache.Add(config.Next, data)
-	} else {
-		fmt.Println("Cache hit!")
+	data, err := getAndCache(config.Next)
+	if err != nil {
+		return fmt.Errorf("error attempting to get or retreive cache: %w", err)
 	}
 	mapPages := MapPages{}
-	err := json.Unmarshal(data, &mapPages)
+	err = json.Unmarshal(data, &mapPages)
 	if err != nil {
 		return fmt.Errorf("error making request: %w", err)
 	}
@@ -56,13 +38,13 @@ func commandMap(config *Config) error {
 	return nil
 }
 
-func commandMapb(config *Config) error {
+func commandMapb(config *Config, p string) error {
 	fmt.Println(config.Previous)
 	if config.Previous == "" {
 		fmt.Println("you're on the first page")
 	} else {
 		config.Next = config.Previous
-		commandMap(config)
+		commandMap(config, "")
 	}
 	return nil
 }
