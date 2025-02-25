@@ -278,8 +278,6 @@ type Pokemon struct {
 	} `json:"past_types"`
 }
 
-var pokedex map[string]Pokemon
-
 func commandCatch(config *Config, name string) error {
 
 	url := "https://pokeapi.co/api/v2/pokemon/" + name
@@ -306,7 +304,6 @@ func commandCatch(config *Config, name string) error {
 	//fmt.Println(catchChance, "catch chance", roll, "roll")
 	if catchChance > roll {
 		fmt.Println(pokemonInfo.Name, "was caught!")
-		pokedex = make(map[string]Pokemon)
 		pokedex[pokemonInfo.Name] = pokemonInfo
 	} else {
 		fmt.Println(pokemonInfo.Name, "escaped!")

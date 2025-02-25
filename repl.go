@@ -24,10 +24,12 @@ type CliCommand struct {
 
 var commands map[string]CliCommand
 var cache *pokecache.Cache
+var pokedex map[string]Pokemon
 
 func init() {
 
 	cache = pokecache.NewCache(5 * time.Second)
+	pokedex = make(map[string]Pokemon)
 }
 
 func startRepl() {
