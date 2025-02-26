@@ -66,6 +66,16 @@ func startRepl() {
 			Description: "Allows you to attempt to catch a Pokemon to add to your Pokedex.",
 			Callback:    commandCatch,
 		},
+		"inspect": {
+			Name:        "inspect",
+			Description: "Allows you to inspect the stats of a Pokemon in your Pokedex.",
+			Callback:    commandInspect,
+		},
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "Allows you to inspect the stats of a Pokemon in your Pokedex.",
+			Callback:    commandPokedex,
+		},
 	}
 
 	for {

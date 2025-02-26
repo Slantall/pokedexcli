@@ -58,7 +58,7 @@ type AreaInfo struct {
 	} `json:"pokemon_encounters"`
 }
 
-func commandExplore(config *Config, name string) error {
+func commandExplore(_ *Config, name string) error {
 
 	url := "https://pokeapi.co/api/v2/location-area/" + name
 

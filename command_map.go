@@ -15,7 +15,7 @@ type MapPages struct {
 	} `json:"results"`
 }
 
-func commandMap(config *Config, p string) error {
+func commandMap(config *Config, _ string) error {
 	if config.Next == "" {
 		config.Next = "https://pokeapi.co/api/v2/location-area/"
 	}
@@ -38,7 +38,7 @@ func commandMap(config *Config, p string) error {
 	return nil
 }
 
-func commandMapb(config *Config, p string) error {
+func commandMapb(config *Config, _ string) error {
 	fmt.Println(config.Previous)
 	if config.Previous == "" {
 		fmt.Println("you're on the first page")
